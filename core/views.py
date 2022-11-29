@@ -1,9 +1,8 @@
 from django.shortcuts import render
-
-# Create your views here.
+from django.utils import timezone
+from core import models
 
 
 def index(request):
-    return render(request, 'core/index.html')
-
-
+    now = timezone.now()
+    return render(request, 'core/index.html', context={'dt': now})
