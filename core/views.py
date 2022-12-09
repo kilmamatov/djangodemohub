@@ -1,21 +1,52 @@
-from django.shortcuts import render
 from django.utils import timezone
+from django.http import JsonResponse
 from core import models
 import project.settings
+from django.shortcuts import render
+
 
 
 def index(request):
     now = timezone.now()
-    person = models.Person.objects.last()
+    person = models.Person.objects.last().name
     phone = models.Person.objects.last().phone
     your_time_zone = project.settings.TIME_ZONE
-    return render(
-        request,
-        'core/index.html',
-        context={
-            'person': person,
-            'dt': now,
-            'phone': phone,
-            'tp': your_time_zone,
-        })
+    response = render(request, 'core/index.html', context={'dt': now, 'tp': your_time_zone, 'person': person, 'phone': phone})
+    return response
 
+
+def persons(request):
+    object_list = []
+    for p in models.Person.objects.all():
+        object_list.append({
+            'id': p.id,
+            'name': p.name,
+        })
+    return JsonResponse({'result': object_list})
+
+
+def todolist(request):
+    name = models.TodoList.objects.last().title
+    content = models.TodoList.objects.last().content
+    created = models.TodoList.objects.last().created
+    due_date = models.TodoList.objects.last().due_date
+    return render(request, 'core/todo.html', context={
+        'title': 'TodoList',
+        'name': name,
+        'content': content,
+        'created': created,
+        'due_date': due_date,
+    })
+
+
+def todo(request):
+    object_list = []
+    for p in models.TodoList.objects.all():
+        object_list.append({
+            'id': p.id,
+            'name': p.title,
+            'content': p.content,
+            'created': p.created,
+            'due_date': p.due_date,
+        })
+    return JsonResponse({'result': object_list})
