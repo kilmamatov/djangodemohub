@@ -2,7 +2,7 @@ from django.utils import timezone
 from django.http import JsonResponse
 from core import models
 import project.settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 
 
@@ -26,21 +26,25 @@ def persons(request):
 
 
 def todolist(request, id):
-    name = models.TodoList.objects.get(id=id).title
-    content = models.TodoList.objects.get(id=id).content
-    created = models.TodoList.objects.get(id=id).created
-    due_date = models.TodoList.objects.get(id=id).due_date
+    """
+    Указываем через запрос id
+    получаем все данные обьекта
+    :param request:
+    :param id:
+    :return:
+    """
+    p = models.TodoList.objects.get(id=id)
     return render(request, 'core/todo.html', context={
         'title': 'TodoList',
-        'name': name,
-        'content': content,
-        'created': created,
-        'due_date': due_date,
+        'name': p.title,
+        'content': p.content,
+        'created': p.created,
+        'due_date': p.due_date,
     })
 
 
 def todo(request, id):
-    p = models.TodoList.objects.get(id=id)
+    p = get_object_or_404(models.TodoList, id=id)
     detail = {
         'id': p.id,
         'name': p.title,
