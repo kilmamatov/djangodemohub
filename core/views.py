@@ -25,11 +25,11 @@ def persons(request):
     return JsonResponse({'result': object_list})
 
 
-def todolist(request):
-    name = models.TodoList.objects.last().title
-    content = models.TodoList.objects.last().content
-    created = models.TodoList.objects.last().created
-    due_date = models.TodoList.objects.last().due_date
+def todolist(request, id):
+    name = models.TodoList.objects.get(id=id).title
+    content = models.TodoList.objects.get(id=id).content
+    created = models.TodoList.objects.get(id=id).created
+    due_date = models.TodoList.objects.get(id=id).due_date
     return render(request, 'core/todo.html', context={
         'title': 'TodoList',
         'name': name,
@@ -39,14 +39,13 @@ def todolist(request):
     })
 
 
-def todo(request):
-    object_list = []
-    for p in models.TodoList.objects.all():
-        object_list.append({
-            'id': p.id,
-            'name': p.title,
-            'content': p.content,
-            'created': p.created,
-            'due_date': p.due_date,
-        })
-    return JsonResponse({'result': object_list})
+def todo(request, id):
+    p = models.TodoList.objects.get(id=id)
+    detail = {
+        'id': p.id,
+        'name': p.title,
+        'content': p.content,
+        'created': p.created,
+        'due_date': p.due_date,
+    }
+    return JsonResponse({'User': detail}, status=200)

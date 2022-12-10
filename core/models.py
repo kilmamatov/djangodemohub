@@ -25,7 +25,7 @@ class TodoList(models.Model):
         verbose_name_plural = 'Пользователи'
 
     def __str__(self):
-        return self.title, self.content
+        return self.title
 
 
 
