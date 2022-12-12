@@ -3,16 +3,44 @@ from django.http import JsonResponse
 from core import models
 import project.settings
 from django.shortcuts import render, get_object_or_404
+# from django.views.generic import TemplateView, ListView
 
+
+"""
+class Index(TemplateView):
+    template_name = 'core/index.html'
+
+    def get_context_data(self, **kwargs):
+        c = super().get_context_data(**kwargs)
+        c['dt'] = timezone.now()
+        return c
+"""
 
 
 def index(request):
+    """
+    Вариант через классы
+    class Index(TemplateView):
+    template_name = 'core/index.html'
+
+    def get_context_data(self, **kwargs):
+        c = super().get_context_data(**kwargs)
+        c['dt'] = timezone.now()
+        return c
+    :param request:
+    :return:
+    """
     now = timezone.now()
     person = models.Person.objects.last().name
     phone = models.Person.objects.last().phone
     your_time_zone = project.settings.TIME_ZONE
     response = render(request, 'core/index.html', context={'dt': now, 'tp': your_time_zone, 'person': person, 'phone': phone})
     return response
+
+"""
+class Persons(ListView):
+    model = models.Person
+"""
 
 
 def persons(request):
@@ -43,7 +71,7 @@ def todolist(request, id):
     })
 
 
-def todo(request, id):
+def todojson(request, id):
     p = get_object_or_404(models.TodoList, id=id)
     detail = {
         'id': p.id,
