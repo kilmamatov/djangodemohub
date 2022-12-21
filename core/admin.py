@@ -14,3 +14,10 @@ class TodoList(admin.ModelAdmin):
     list_display = ('title', 'created', 'id')
     search_fields = ('title',)
     list_filter = ('created',)
+
+
+@admin.register(models.Todo)
+class Todo(admin.ModelAdmin):
+    list_display = ('name', 'id', 'priority', 'created', 'update', 'done')
+    search_fields = ('name', 'id')
+    list_filter = ('created', 'done')

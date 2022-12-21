@@ -37,6 +37,7 @@ def index(request):
     response = render(request, 'core/index.html', context={'dt': now, 'tp': your_time_zone, 'person': person, 'phone': phone})
     return response
 
+
 """
 class Persons(ListView):
     model = models.Person
