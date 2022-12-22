@@ -32,7 +32,7 @@ class TodoList(models.Model):
 
 
 class Todo(models.Model):
-    name = models.CharField('Имя', max_length=255, blank=True, default='Общая задача')
+    name = models.CharField('Имя', max_length=255, blank=True,)
     content = models.TextField('Задача', help_text='Какая либо подсказка, если имеет смысл')
     priority = models.IntegerField('Приоритет сортировки', default=1)
     done = models.DateTimeField('Выполнено', null=True, blank=True)  # BooleanField так же можно использовать
