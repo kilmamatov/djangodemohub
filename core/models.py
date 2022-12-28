@@ -1,5 +1,5 @@
 import datetime
-
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from django.utils.timezone import now
@@ -31,20 +31,26 @@ class TodoList(models.Model):
         return self.title
 
 
+User = get_user_model()
+
+
 class Todo(models.Model):
-    name = models.CharField('Имя', max_length=255, blank=True,)
-    content = models.TextField('Задача', help_text='Какая либо подсказка, если имеет смысл')
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    name = models.CharField('Название', unique=True, max_length=255, blank=True,)
+    content = models.TextField('Описание', help_text='Какая либо подсказка, если имеет смысл')
     priority = models.IntegerField('Приоритет сортировки', default=1)
     done = models.DateTimeField('Выполнено', null=True, blank=True)  # BooleanField так же можно использовать
     created = models.DateTimeField('Создан', auto_now_add=True,)
     update = models.DateTimeField('Обновлен', auto_now=True)
 
     class Meta:
-        verbose_name = 'Ученик'
-        verbose_name_plural = 'Журнал'
+        verbose_name = 'Дела'
+        verbose_name_plural = 'Список дел'
         ordering = ('priority', 'created')
 
     def __str__(self):
         return self.name
 
+    def duration(self) -> datetime.timedelta:
+        return now() - self.created
 
