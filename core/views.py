@@ -31,10 +31,8 @@ def index(request):
     :return:
     """
     now = timezone.now()
-    person = models.Person.objects.last().name
-    phone = models.Person.objects.last().phone
     your_time_zone = project.settings.TIME_ZONE
-    response = render(request, 'core/index.html', context={'title': 'Главная страница', 'dt': now, 'tp': your_time_zone, 'person': person, 'phone': phone})
+    response = render(request, 'core/index.html', context={'title': 'Главная страница', 'dt': now, 'tp': your_time_zone})
     return response
 
 
@@ -44,7 +42,7 @@ class Persons(ListView):
 """
 
 
-def persons(request):
+def test(request):
     object_list = []
     for p in models.Todo.objects.all():
         object_list.append({

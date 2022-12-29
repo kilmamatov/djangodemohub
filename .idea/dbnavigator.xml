@@ -12,8 +12,8 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600">
-      <console name="demo" type="STANDARD" schema="main" session="Main" />
+    <connection id="1d2b5d1e-4e2e-4dbf-ac3c-ecaeac588c1a">
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -23,19 +23,21 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600" dataset="main.auth_user" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600" dataset="main.auth_user_groups" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600" dataset="main.core_todo" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600" dataset="main.django_migrations" active-filter-id="939d204b-9492-4fe0-bae2-df467434ab5e">
-      <filter id="939d204b-9492-4fe0-bae2-df467434ab5e" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
-        <condition column="id" operator="=" value="" active="true" />
-      </filter>
-    </filter-actions>
-    <filter-actions connection-id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600" dataset="main.core_todolist" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600" dataset="main.core_person" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="1d2b5d1e-4e2e-4dbf-ac3c-ecaeac588c1a" dataset="main.auth_user" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.MethodExecutionManager">
+    <method-browser />
+    <execution-history>
+      <group-entries value="true" />
+      <execution-inputs />
+    </execution-history>
+    <argument-values-cache />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -43,10 +45,10 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="d2cdd0d8-3a61-498a-b9da-9f98a32a1600" active="true" signed="true">
+      <connection id="1d2b5d1e-4e2e-4dbf-ac3c-ecaeac588c1a" active="true" signed="true">
         <database>
-          <name value="demo" />
-          <description value="" />
+          <name value="Connection" />
+          <description value="demo" />
           <database-type value="SQLITE" />
           <config-type value="BASIC" />
           <database-version value="3.39" />

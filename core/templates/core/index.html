@@ -6,9 +6,9 @@
       <p>Простые ссылки</p>
       <nav>
         <ul>
-          <li><a href="">Эта страница</a></li>
+          <li><a href="{% url 'home' %}">Эта страница</a></li>
           <li><a href="/admin">Админ панель</a></li>
-          <li><a href="/persons">Личный кабинет</a></li>
+          <li><a href="{% url 'home' %}">Личный кабинет</a></li>
         </ul>
       </nav>
     </header>
@@ -16,7 +16,4 @@
       <p>Время -- {{ dt }}</p>
       <p>Часовой пояс -- {{ tp }}</p>
     </footer>
-   <p>Ваши данные</p>
-  <li><a>Имя -- {{ person }}</a></li>
-  <li><a>Телефон -- {{ phone }}</a></li>
 {% endblock %}

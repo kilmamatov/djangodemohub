@@ -4,7 +4,7 @@ import core.views
 urlpatterns = [
     # path('', core.views.Index.as_view()),
     path('', core.views.index, name='home'),
-    path('persons/', core.views.persons),
+    path('test/', core.views.test, ),
     # path('persons/', core.views.Persons.as_view()),
     path('todolist/<int:id>/', core.views.todolist),
     path('todo/<int:id>/', core.views.todojson),
