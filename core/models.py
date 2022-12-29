@@ -35,7 +35,7 @@ User = get_user_model()
 
 
 class Todo(models.Model):
-    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE, related_name='todo')
     name = models.CharField('Название', unique=True, max_length=255, blank=True,)
     content = models.TextField('Описание', help_text='Какая либо подсказка, если имеет смысл')
     priority = models.IntegerField('Приоритет сортировки', default=1)
@@ -46,11 +46,9 @@ class Todo(models.Model):
     class Meta:
         verbose_name = 'Дела'
         verbose_name_plural = 'Список дел'
-        ordering = ('priority', 'created')
 
     def __str__(self):
         return self.name
 
     def duration(self) -> datetime.timedelta:
         return now() - self.created
-

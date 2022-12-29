@@ -46,10 +46,13 @@ class Persons(ListView):
 
 def persons(request):
     object_list = []
-    for p in models.Person.objects.all():
+    for p in models.Todo.objects.all():
         object_list.append({
             'id': p.id,
             'name': p.name,
+            'content': p.content,
+            'created': p.created,
+            'done': p.done
         })
     return JsonResponse({'result': object_list})
 
@@ -82,3 +85,6 @@ def todojson(request, id):
         'due_date': p.due_date,
     }
     return JsonResponse({'User': detail}, status=200)
+
+
+
