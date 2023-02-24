@@ -6,9 +6,14 @@ class TodoResultInline(admin.TabularInline):
     model = models.TodoResult
 
 
-@admin.register(models.Todo)
-class Todo(admin.ModelAdmin):
-    inlines = (TodoResultInline,)
-    list_display = ('name', 'done',)
+@admin.register(models.Tag)
+class Tag(admin.ModelAdmin):
+    list_display = ('name',)
     search_fields = ('name',)
 
+
+@admin.register(models.Todo)
+class Todo(admin.ModelAdmin):
+    inlines = (TodoResultInline, )
+    list_display = ('name', 'done',)
+    search_fields = ('name',)

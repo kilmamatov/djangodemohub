@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from core import models
 import project.settings
 from django.shortcuts import render, get_object_or_404
+from core import filters
 # from django.views.generic import TemplateView, ListView
 
 
@@ -83,6 +84,11 @@ def todojson(request, id):
         'due_date': p.due_date,
     }
     return JsonResponse({'User': detail}, status=200)
+
+
+def tags(request):
+    t = filters.Tag(request.GET, queryset=models.Tag.objects.all())
+    return JsonResponse({'results': list(t.qs.values())})
 
 
 
