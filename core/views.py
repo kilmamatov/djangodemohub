@@ -1,9 +1,10 @@
 from django.utils import timezone
 from django.http import JsonResponse
 from core import models
-import project.settings
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from core import filters
+
 # from django.views.generic import TemplateView, ListView
 
 
@@ -32,7 +33,7 @@ def index(request):
     :return:
     """
     now = timezone.now()
-    your_time_zone = project.settings.TIME_ZONE
+    your_time_zone = settings.TIME_ZONE
     response = render(request, 'core/index.html', context={'title': 'Главная страница', 'dt': now, 'tp': your_time_zone})
     return response
 
