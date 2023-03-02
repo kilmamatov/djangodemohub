@@ -1,19 +1,42 @@
 from django.http import JsonResponse
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework import status
 from core import models
 from django.shortcuts import render, get_object_or_404
 from core import filters
 from core import serializers
+from django_filters.rest_framework import DjangoFilterBackend
 
 
-class Tags(ListAPIView):
+class TagViewSet(ReadOnlyModelViewSet):
     queryset = models.Tag.objects.all()
-    serializer_class = serializers.TagSearch
-    django_filters = filters.Tag
+    serializer_class = serializers.Tag
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.Tag
 
     def list(self, request, *args, **kwargs):
+        serializer = serializers.TagSearch(data=request.query_params)
+        serializer.is_valid(raise_exception=True)
         return super().list(request, *args, **kwargs)
+
+#
+# class Tags(ListAPIView):
+#     queryset = models.Tag.objects.all()
+#     serializer_class = serializers.Tag
+#     filter_backends = [DjangoFilterBackend]
+#     filterset_class = filters.Tag
+#
+#     def list(self, request, *args, **kwargs):
+#         serializer = serializers.TagSearch(data=request.query_params)
+#         serializer.is_valid(raise_exception=True)
+#         return super().list(request, *args, **kwargs)
+#
+#
+# class Tag(RetrieveAPIView):
+#     queryset = models.Tag.objects.all()
+#     serializer_class = serializers.Tag
+
 
 
 def index(request):
