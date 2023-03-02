@@ -15,5 +15,5 @@ class Tag(admin.ModelAdmin):
 @admin.register(models.Todo)
 class Todo(admin.ModelAdmin):
     inlines = (TodoResultInline, )
-    list_display = ('name', 'done',)
+    list_display = ('name', 'done', 'duration')
     search_fields = ('name',)
