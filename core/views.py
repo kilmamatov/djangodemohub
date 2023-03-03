@@ -15,12 +15,7 @@ class TagViewSet(ReadOnlyModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = filters.Tag
 
-    def list(self, request, *args, **kwargs):
-        serializer = serializers.TagSearch(data=request.query_params)
-        serializer.is_valid(raise_exception=True)
-        return super().list(request, *args, **kwargs)
 
-#
 # class Tags(ListAPIView):
 #     queryset = models.Tag.objects.all()
 #     serializer_class = serializers.Tag
@@ -36,7 +31,6 @@ class TagViewSet(ReadOnlyModelViewSet):
 # class Tag(RetrieveAPIView):
 #     queryset = models.Tag.objects.all()
 #     serializer_class = serializers.Tag
-
 
 
 def index(request):
