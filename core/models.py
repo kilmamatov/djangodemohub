@@ -9,6 +9,7 @@ User = get_user_model()
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)
+    user = User.objects.all()
 
     class Meta:
         verbose_name = 'Тэг'
@@ -35,8 +36,8 @@ class Todo(models.Model):
     def __str__(self):
         return self.name
 
-    def duration(self) -> datetime.timedelta:
-        return now() - self.created
+    # def duration(self) -> datetime.timedelta:
+    #     return now() - self.created
 
 
 class TodoResult(models.Model):

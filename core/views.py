@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from core import models
 from django.shortcuts import render, get_object_or_404
@@ -10,10 +12,19 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class TagViewSet(ReadOnlyModelViewSet):
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
+    permission_classes = (IsAuthenticated,)
     queryset = models.Tag.objects.all()
     serializer_class = serializers.Tag
     filter_backends = [DjangoFilterBackend]
-    filterset_class = filters.Tag
+    filterset_class = filters.Tagэхх
+
+
+class TodoViewSet(ReadOnlyModelViewSet):
+    queryset = models.Todo.objects.all()
+    serializer_class = serializers.Todo
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = filters.Todo
 
 
 # class Tags(ListAPIView):
@@ -50,56 +61,56 @@ def index(request):
     return response
 
 
-def test(request):
-    object_list = []
-    for p in models.Todo.objects.all():
-        object_list.append({
-            'id': p.id,
-            'name': p.name,
-            'content': p.content,
-            'created': p.created,
-            'done': p.done
-        })
-    return JsonResponse({'result': object_list})
+# def test(request):
+#     object_list = []
+#     for p in models.Todo.objects.all():
+#         object_list.append({
+#             'id': p.id,
+#             'name': p.name,
+#             'content': p.content,
+#             'created': p.created,
+#             'done': p.done
+#         })
+#     return JsonResponse({'result': object_list})
 
 
-def todolist(request, id):
-    """
-    Указываем через запрос id
-    получаем все данные обьекта
-    :param request:
-    :param id:
-    :return:
-    """
-    p = models.TodoList.objects.get(id=id)
-    return render(request, 'core/todo.html', context={
-        'title': 'TodoList',
-        'name': p.title,
-        'content': p.content,
-        'created': p.created,
-        'due_date': p.due_date,
-    })
+# def todolist(request, id):
+#     """
+#     Указываем через запрос id
+#     получаем все данные обьекта
+#     :param request:
+#     :param id:
+#     :return:
+#     """
+#     p = models.TodoList.objects.get(id=id)
+#     return render(request, 'core/todo.html', context={
+#         'title': 'TodoList',
+#         'name': p.title,
+#         'content': p.content,
+#         'created': p.created,
+#         'due_date': p.due_date,
+#     })
 
 
-def todojson(request, id):
-    p = get_object_or_404(models.TodoList, id=id)
-    detail = {
-        'id': p.id,
-        'name': p.title,
-        'content': p.content,
-        'created': p.created,
-        'due_date': p.due_date,
-    }
-    return JsonResponse({'User': detail}, status=200)
+# def todojson(request, id):
+#     p = get_object_or_404(models.TodoList, id=id)
+#     detail = {
+#         'id': p.id,
+#         'name': p.title,
+#         'content': p.content,
+#         'created': p.created,
+#         'due_date': p.due_date,
+#     }
+#     return JsonResponse({'User': detail}, status=200)
 
 
-def tags(request):
-    search_serializer = serializers.TagSearch(data=request.GET)
-    if not search_serializer.is_valid():
-        return JsonResponse(search_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    f = filters.Tag(request.GET, queryset=models.Tag.objects.all())
-    serializer = serializers.Tag(instance=f.qs, many=True)
-    return JsonResponse({'results': serializer.data})
+# def tags(request):
+#     search_serializer = serializers.TagSearch(data=request.GET)
+#     if not search_serializer.is_valid():
+#         return JsonResponse(search_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     f = filters.Tag(request.GET, queryset=models.Tag.objects.all())
+#     serializer = serializers.Tag(instance=f.qs, many=True)
+#     return JsonResponse({'results': serializer.data})
 
 
 

@@ -24,3 +24,12 @@ class TagSearch(serializers.Serializer):
 
     def validate(self, attrs):
         return attrs
+
+
+class Todo(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Todo
+        fields = '__all__'
+        # exclude = ['name']
+
