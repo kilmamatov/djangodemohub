@@ -17,7 +17,7 @@ class TagViewSet(ReadOnlyModelViewSet):
     queryset = models.Tag.objects.all()
     serializer_class = serializers.Tag
     filter_backends = [DjangoFilterBackend]
-    filterset_class = filters.Tagэхх
+    filterset_class = filters.Tag
 
 
 class TodoViewSet(ReadOnlyModelViewSet):
