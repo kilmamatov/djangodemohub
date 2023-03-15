@@ -10,6 +10,6 @@ urlpatterns = [
 ]
 
 router = DefaultRouter()
-router.register('tags', core.views.TagViewSet, basename="tag")
+router.register('tags', core.views.TagViewSet, basename='tag')
 router.register('todo', core.views.TodoViewSet, basename='todo')
 urlpatterns += router.urls
