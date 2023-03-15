@@ -39,6 +39,10 @@ class TodoViewSet(ModelViewSet):
     def get_queryset(self):
         return models.Todo.objects.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        serializer.validated_data['user'] = self.request.user
+        serializer.save()
+
     @action(detail=True, methods=['post', 'put', 'patch'])
     def set_done(self, request, pk=None):
         todo: models.Todo = self.get_object()
@@ -56,6 +60,17 @@ class TodoViewSet(ModelViewSet):
             todo.save(update_fields=['done'])
         serializer = serializers.Todo(instance=todo)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['delete'])
+    def delete(self, request, pk=None):
+        todo: models.Todo = self.get_object()
+        if todo:
+            todo.delete()
+        return Response({'massage': 'deleted'}, status=200)
+
+
+
+
 
 
 # class Tags(ListAPIView):

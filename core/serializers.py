@@ -27,9 +27,10 @@ class TagSearch(serializers.Serializer):
 
 
 class Todo(serializers.ModelSerializer):
+    # tags = Tag(many=True)
 
     class Meta:
         model = models.Todo
-        fields = '__all__'
-        # exclude = ['name']
+        # fields = '__all__'
+        exclude = ['user']
 
