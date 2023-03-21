@@ -4,6 +4,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 from django.utils.timezone import now
 from core import models
 from django.shortcuts import render
@@ -12,12 +13,31 @@ from core import serializers
 from django_filters.rest_framework import DjangoFilterBackend
 
 
-# class RegisterUser(GenericAPIView):
-#     queryset = models.User
-#
-#     def post(self, request):
-#         # todo
-#         pass
+class RegisterUser(GenericAPIView):
+    queryset = models.User
+    serializer_class = serializers.RegisterUser
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = models.User.objects.create_user(
+            username=serializer.validated_data['username'],
+            password=serializer.validated_data['password'],
+        )
+        token = Token.objects.create(user=user)
+        return Response({'token': token.key})
+
+
+class LoginUser(GenericAPIView):
+    queryset = models.User
+    serializer_class = serializers.LoginUser
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        token = Token.objects.get(user__username=serializer.validated_data['username'])
+        return Response({'token': token.key})
+        pass
 
 
 class TagViewSet(ReadOnlyModelViewSet):
@@ -45,6 +65,8 @@ class TodoViewSet(ModelViewSet):
 
     @action(detail=True, methods=['post', 'put', 'patch'])
     def set_done(self, request, pk=None):
+        # models.Todo.objects.filter(pk=pk, done__isnull=True).update(done=now())
+        # return Response({'massage': 'ok'})
         todo: models.Todo = self.get_object()
         if not todo.done:
             todo.done = now()
