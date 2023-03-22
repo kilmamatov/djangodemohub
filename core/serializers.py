@@ -55,8 +55,7 @@ class LoginUser(serializers.Serializer):
         return value
 
     def validate(self, attrs):
-        user = models.User.objects.filter(username=attrs['username'])
+        user = models.User.objects.get(username=attrs['username'])
         if not user.check_password(attrs['password']):
             raise serializers.ValidationError({'password': 'Пароль не верный'})
         return attrs
-
